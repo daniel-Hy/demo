@@ -91,7 +91,8 @@ export default {
     font-size: 20px;
   }
   .mint-tabbar{
-    background: rgba(217, 217, 217, .2);
+    background: #fff;
+    box-shadow: 0 0 6px #d9d9d9;
     color: #999;
   }
   .mint-tabbar > .mint-tab-item.is-selected{
