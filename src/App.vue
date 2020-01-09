@@ -58,7 +58,7 @@ export default {
 </script>
 
 <style scope>
-  html,body{
+  html,body,p{
     padding: 0;
     margin: 0;
   }

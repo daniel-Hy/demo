@@ -30,12 +30,12 @@ module.exports = {
       '@': resolve('src'),
     }
   },
-  plugins: [
-    new webpack.PrefetchPlugin({
-      $: 'jquery',
-      jQuery: 'jquery'
-    })
-  ],
+  // plugins: [
+  //   new webpack.PrefetchPlugin({
+  //     $: 'jquery',
+  //     jQuery: 'jquery'
+  //   })
+  // ],
   module: {
     rules: [
       {

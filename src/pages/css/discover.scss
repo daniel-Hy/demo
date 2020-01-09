@@ -1,0 +1,149 @@
+.global{
+  padding-bottom: 60px;
+}
+.banner-box{
+  margin: 20px 0 0;
+  height: 145px;
+  .bannerInfo img{
+    margin: 0 auto;
+    border-radius: 8px;
+    width: calc(100% - 40px);
+  }
+}
+.gn-list{
+  display: flex;
+  border-bottom: 1px solid #E6E6E6;
+  margin: 20px 0 0;
+  padding: 0 20px 20px; 
+  .gn-list-info{
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+  }
+  .list-info-span{
+    display: block;
+    background: #d81e06;
+    border-radius: 50%;
+    margin: 0 auto 5px auto;
+    line-height: 40px;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+  }
+  .iconfont{
+    color: #fff;
+  }
+}
+.recommend-head{
+  overflow: hidden;
+  padding: 0 20px; 
+  margin: 20px 0;
+  line-height: 30px;
+  height: 30px;
+  .recommend-head-title{
+    float: left;
+    font-weight: bold;
+  }
+  .recommend-head-btn{
+    float: right;
+    border: 1px #E5E5E5 solid;
+    border-radius: 20px;
+    padding: 7px 14px;
+    font-size: 14px;
+    line-height: 14px;
+  }
+}
+.activeLi {
+  font-size: 14px !important;
+  font-weight: bold;
+}
+.songsList{
+  overflow: hidden;
+  padding: 0 20px; 
+  .songsImg-box{
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .songsCount{
+    position: absolute;
+    right: 8px;
+    top: 5px;
+    color: #fff;
+    font-size: 12px;
+  }
+  .songsCount .iconfont{
+    margin-right: 3px;
+    font-size: 12px;
+  }
+  .songsList-item{
+    float: left;
+    margin-right: 10px;
+    width: calc((100% - 20px) / 3);
+  }
+  .songsList-item:nth-child(3n){
+    margin-right: 0;
+  }
+  .songsImg-title{
+    overflow: hidden;
+    padding: 0;
+    margin: 5px 0 12px 0;
+    line-height: 16px;
+    font-size: 12px;
+    font-weight: 400;
+    height: 32px;
+  }
+}
+.newSongTag{
+  overflow: hidden;
+  float: left;
+  .newSongLi{
+    float: left;
+    margin-right: 8px;
+    font-size: 12px;
+  }
+}
+.newSong{
+  .songsName,
+  .songsSinger{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .songsName{
+    margin-top: 5px;
+    font-size: 12px;
+  }
+  .songsSinger{
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: #757575;
+  }
+}
+// 云村精选
+.chosen{
+  border-top: 6px #fafafa solid;
+  padding: 0 20px;
+}
+.chosen-head{
+  overflow: hidden;
+  border-bottom: 1px #f3f3f3 solid;
+  line-height: 40px;
+  height: 40px;
+}
+.chosen-title{
+  float: left;
+  font-weight: bold;
+  font-size: 12px;
+}
+.chosen-reload{
+  border: 0;
+  float: right;
+  border-radius: 20px;
+  font-size: 12px;
+  line-height: 40px;
+  .iconfont{
+    margin-right: 5px;
+    font-size: 12px;
+  }
+}

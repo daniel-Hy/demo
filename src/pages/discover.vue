@@ -45,28 +45,45 @@
       <ul class="songsList">
         <li class="songsList-item" v-for="(item, index) in songsList" :key="index">
           <div class="songsImg-box">
-            <img :src="item.url" width="100%"/>
+            <img :src="item.picUrl" width="100%"/>
             <div class="songsCount">
               <i class="iconfont">&#xe611;</i>{{item.count}}
             </div>
           </div>
-          <p class="songsImg-title">{{item.title}}</p>
+          <p class="songsImg-title">{{item.name}}</p>
         </li>
       </ul>
     </div>
     <!-- 新碟 -->
     <div class="recommend">
       <div class="recommend-head">
-        <ul class="newSong">
+        <ul class="newSongTag">
           <li class="newSongLi" @click="handleClick(1)">新碟</li>
           <li class="newSongLi" @click="handleClick(2)">新歌</li>
         </ul>
         <span class="recommend-head-btn">{{tagStatus==1?'更多新碟':'新歌推荐'}}</span>
       </div>
-      <div class="">
-
+      <div class="newSong">
+        <ul class="songsList">
+          <li class="songsList-item" v-for="(item, index) in newSongs" :key="index">
+            <div class="songsImg-box">
+              <img :src="item.picUrl" width="100%"/>
+            </div>
+            <p class="songsName">{{item.name}}</p>
+            <p class="songsSinger">{{item.singer}}</p>
+          </li>
+        </ul>
       </div>
     </div>
+    <!-- <div class="chosen">
+      <div class="chosen-head">
+        <span class="chosen-title">云村精选</span>
+        <span class="chosen-reload"><i class="iconfont">&#xe619;</i>获取新内容</span>
+      </div>
+      <div class="chosen-info">
+        <p class="chosen-info-title"></p>
+      </div>
+    </div> -->
   </div>
 </template>
 
@@ -76,20 +93,16 @@
     name: 'Discover',
     data () {
       return {
-        songsList: [{
-          url: '//p2.music.126.net/6UcYavdWh8uqCVlnX1JdUA==/109951164476679445.jpg', title: '『深情盛宴』陷入直抵心灵的旖旎女声中', count: '69万'
-        },{
-          url: '//p2.music.126.net/56SGVMCp45NSceH3In5PnQ==/109951164092616590.jpg', title: '总有些惊奇的际遇，比方说当我遇见你', count: '151万'
-        },{
-          url: '//p2.music.126.net/_ldY-Tf5dCIubyyeATSrdA==/109951164322846413.jpg', title: '你搜不到的土嗨神曲', count: '571万'
-        },{
-          url: '//p2.music.126.net/KEBE7CU-y2lInkHBcgzpUA==/109951164173101961.jpg', title: '[华语私人定制] 最懂你的华语推荐 每日更新35首', count: '13901万'
-        },{
-          url: '//p2.music.126.net/1gNcBmzdIaQtU00Dvp_TvQ==/109951163912081772.jpg', title: '好听到单曲循环', count: '11896万'
-        },{
-          url: '//p2.music.126.net/2DiDwfr6MkS6FtCuDQ9lkQ==/109951164508694085.jpg', title: '你好2020♡', count: '9516万'
-        }],
+        songsList: [
+          { picUrl: '//p2.music.126.net/6UcYavdWh8uqCVlnX1JdUA==/109951164476679445.jpg', name: '『深情盛宴』陷入直抵心灵的旖旎女声中', count: '69万' },
+          { picUrl: '//p2.music.126.net/56SGVMCp45NSceH3In5PnQ==/109951164092616590.jpg', name: '总有些惊奇的际遇，比方说当我遇见你', count: '151万' },
+          { picUrl: '//p2.music.126.net/_ldY-Tf5dCIubyyeATSrdA==/109951164322846413.jpg', name: '你搜不到的土嗨神曲', count: '571万' },
+          { picUrl: '//p2.music.126.net/KEBE7CU-y2lInkHBcgzpUA==/109951164173101961.jpg', name: '[华语私人定制] 最懂你的华语推荐 每日更新35首', count: '13901万' },
+          { picUrl: '//p2.music.126.net/1gNcBmzdIaQtU00Dvp_TvQ==/109951163912081772.jpg', name: '好听到单曲循环', count: '11896万' },
+          { picUrl: '//p2.music.126.net/2DiDwfr6MkS6FtCuDQ9lkQ==/109951164508694085.jpg', name: '你好2020♡', count: '9516万' }
+        ],
         tagStatus: 1,
+        newSongs: []
       }
     },
     mounted() {
@@ -106,6 +119,19 @@
         self.tagStatus = type
         $('.newSongLi:eq('+(type-1)+')').addClass('activeLi')
         $('.newSongLi:eq('+(type-1)+')').siblings().removeClass('activeLi')
+        if (type==1) {
+          self.newSongs = [
+            { picUrl: '//p1.music.126.net/R5hmBoVZt0I56BPiVic1aA==/109951164601146483.jpg', name: 'Yummy', singer: 'Justin Bieber' },
+            { picUrl: '//p1.music.126.net/2lC8dgQola_6YGfeJJZdtA==/109951164601966699.jpg', name: '赤脚追光', singer: 'R1SE' },
+            { picUrl: '//p1.music.126.net/z3iaVvR-7_DLxzktOu5I3g==/109951164594343426.jpg', name: '羡慕', singer: '许嵩' }
+          ]
+        } else {
+          self.newSongs = [
+            { picUrl: '//p1.music.126.net/z4cBZXR-82oae0eBkMbdRA==/109951164590844332.jpg', name: '陪陪我', singer: '王齐铭WatchMe/Gosh Music' },
+            { picUrl: '//p1.music.126.net/IrkDUhmAJC8eyJqHtV6DqA==/109951164591747721.jpg', name: '因为宠爱', singer: '金玟岐' },
+            { picUrl: '//p1.music.126.net/KTo5oSxH3CPA5PBTeFKDyA==/109951164581432409.jpg', name: '摩天动物园', singer: 'G.E.M.邓紫棋' }
+          ]
+        }
       }
     }
   }
@@ -129,109 +155,5 @@
   }
 </style>
 <style lang="scss" scoped>
-  .global{
-    padding-bottom: 60px;
-  }
-  .banner-box{
-    margin: 20px 0 0;
-    height: 145px;
-    .bannerInfo img{
-      margin: 0 auto;
-      border-radius: 8px;
-      width: calc(100% - 40px);
-    }
-  }
-  .gn-list{
-    display: flex;
-    border-bottom: 1px solid #E6E6E6;
-    margin: 20px 0 0;
-    padding: 0 20px 20px; 
-    .gn-list-info{
-      flex: 1;
-      text-align: center;
-      font-size: 12px;
-    }
-    .list-info-span{
-      display: block;
-      background: #d81e06;
-      border-radius: 50%;
-      margin: 0 auto 5px auto;
-      line-height: 40px;
-      text-align: center;
-      width: 40px;
-      height: 40px;
-    }
-    .iconfont{
-      color: #fff;
-    }
-  }
-  .recommend-head{
-    overflow: hidden;
-    padding: 0 20px; 
-    margin: 20px 0;
-    line-height: 30px;
-    height: 30px;
-    .recommend-head-title{
-      float: left;
-      font-weight: bold;
-    }
-    .recommend-head-btn{
-      float: right;
-      border: 1px #E5E5E5 solid;
-      border-radius: 20px;
-      padding: 7px 14px;
-      font-size: 14px;
-      line-height: 14px;
-    }
-  }
-  .newSong{
-    overflow: hidden;
-    float: left;
-  }
-  .newSong .newSongLi{
-    float: left;
-    margin-right: 8px;
-    font-size: 12px;
-  }
-  .activeLi {
-    font-size: 14px !important;
-    font-weight: bold;
-  }
-  .songsList{
-    overflow: hidden;
-    padding: 0 20px; 
-    .songsImg-box{
-      position: relative;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .songsCount{
-      position: absolute;
-      right: 8px;
-      top: 5px;
-      color: #fff;
-      font-size: 12px;
-    }
-    .songsCount .iconfont{
-      margin-right: 3px;
-      font-size: 12px;
-    }
-    .songsList-item{
-      float: left;
-      margin-right: 10px;
-      width: calc((100% - 20px) / 3);
-    }
-    .songsList-item:nth-child(3n){
-      margin-right: 0;
-    }
-    .songsImg-title{
-      overflow: hidden;
-      padding: 0;
-      margin: 5px 0 12px 0;
-      line-height: 16px;
-      font-size: 12px;
-      font-weight: 400;
-      height: 32px;
-    }
-  }
+  @import './css/discover.scss'
 </style>
