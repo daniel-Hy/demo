@@ -1,7 +1,8 @@
 <template>
   <div class="global">
+    <Head></Head>
     <div class="banner-box">
-      <mt-swipe :auto="5000">
+      <mt-swipe :auto="0">
         <mt-swipe-item class="bannerInfo">
           <img src="//p1.music.126.net/Z_721L_HWnP8pH0UuGyu7w==/109951164579701346.jpg"/>
         </mt-swipe-item>
@@ -89,8 +90,11 @@
 
 <script>
   import $ from 'jquery'
+  import Head from './head'
+
   export default {
     name: 'Discover',
+    components: { Head },
     data () {
       return {
         songsList: [
@@ -110,6 +114,7 @@
       $(function() {
         const itemWidth = $('.songsList').find('.songsList-item').width()
         $('.songsList').find('.songsImg-box').height(itemWidth)
+        $('.banner-box').height($('.mint-swipe-item img').height())
         self.handleClick(1)
       })
     }, 

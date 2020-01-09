@@ -1,8 +1,5 @@
 <template>
   <div id="app">
-    <div class="header">
-      
-    </div>
     <mt-tabbar fixed v-model="selected">
       <mt-tab-item id="discover">
         <span slot="icon" class="icon-span"><i class="iconfont">&#xe762;</i></span>发现
@@ -70,6 +67,9 @@ export default {
   img{
     display: block;
   } 
+  #app{
+    padding-top: 50px;
+  }
   .icon-span{
     display: block;
     margin: 0 auto;
