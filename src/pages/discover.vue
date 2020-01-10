@@ -2,7 +2,7 @@
   <div class="global">
     <Head></Head>
     <div class="banner-box">
-      <mt-swipe :auto="0">
+      <mt-swipe :auto="5000">
         <mt-swipe-item class="bannerInfo">
           <img src="//p1.music.126.net/Z_721L_HWnP8pH0UuGyu7w==/109951164579701346.jpg"/>
         </mt-swipe-item>

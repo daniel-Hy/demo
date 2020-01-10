@@ -68,7 +68,7 @@ export default {
     display: block;
   } 
   #app{
-    padding-top: 50px;
+    padding-top: 40px;
   }
   .icon-span{
     display: block;
