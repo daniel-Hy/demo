@@ -1,13 +1,15 @@
 <template>
-  <div class="page-head">
+  <div class="page-head" :style="{background: tabindex==5?'#808080':''}">
     <span class="head-left">
-      <i class="iconfont">&#xe64f;</i>
+      <i class="iconfont" v-if="tabindex==1">&#xe64f;</i>
+      <i class="iconfont" style="color: #fff;" v-if="tabindex==5">&#xe68b;</i>
     </span>
     <div class="head-center">
-      <input type="text" class="searchText"/>
+      <input type="text" class="searchText iconfont" :placeholder="icon" v-if="tabindex==1||tabindex==2"/>
     </div>
     <span class="head-right">
-      <i class="iconfont">&#xe64f;</i>
+      <!-- <i class="iconfont">&#xe64f;</i> -->
+      <img class="playing playing-img" src="//p2.music.126.net/6UcYavdWh8uqCVlnX1JdUA==/109951164476679445.jpg"/>
     </span>
   </div>
 </template>
@@ -15,9 +17,10 @@
 <script>
   export default {
     name: 'Head',
+    props:['tabindex'],
     data () {
       return {
-        
+        icon:'\ue626 搜索音乐、视频、歌词、电台'
       }
     }
   }
@@ -25,7 +28,7 @@
 
 <style lang="scss" scoped>
   .page-head{
-    box-shadow: 0 0 6px #d9d9d9;
+    // box-shadow: 0 0 6px #d9d9d9;
     background: #fff;
     position: fixed;
     top: 0;
@@ -48,19 +51,45 @@
     .head-center{
       position: relative;
       width: calc(100% - 80px);
+      height: 40px;
       .searchText{
         position: absolute;
         background: #fafafa;
+        margin: 0 auto;
         border-radius: 15px;
         outline: none;
         text-align: center;
         top: 5px;
         left: 0;
+        right: 0;
         border: 0;
         padding: 0;
-        width: 100%;
+        width: 95%;
         height: 30px;
       }
+      .searchText.iconfont{
+        font-size: 14px;
+      }
+      ::-webkit-input-placeholder { /* WebKit browsers */
+        color: #999;
+      }
+    }
+    .playing{
+      border-radius: 50%;
+      margin: 5px auto 0 auto;
+      width: 30px;
+      height: 30px;
+    }
+    .playing-img{
+      -webkit-animation: rotateImg 15s linear infinite;
+    }
+    @-webkit-keyframes rotateImg{
+      0%{-webkit-transform:rotate(0deg);}
+      25%{-webkit-transform:rotate(90deg);}
+      50%{-webkit-transform:rotate(180deg);}
+      75%{-webkit-transform:rotate(270deg);}
+      100%{-webkit-transform:rotate(360deg);}
     }
   }
+  
 </style>

@@ -4,9 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Mint from 'mint-ui'
+import vueSwiper from 'vue-awesome-swiper'
 
 Vue.use(Mint)
+Vue.use(vueSwiper)
 import 'mint-ui/lib/style.css'
+import 'swiper/dist/css/swiper.css'
 import '@/assets/css/iconfont.css'
 Vue.config.productionTip = false
 

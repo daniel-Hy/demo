@@ -1,19 +1,20 @@
 <template>
   <div id="app">
-    <mt-tabbar fixed v-model="selected">
-      <mt-tab-item id="discover">
+    <Head :tabindex="selected"></Head>
+    <mt-tabbar fixed v-model="selected" style="background:#F8F8F8 ">
+      <mt-tab-item id="1">
         <span slot="icon" class="icon-span"><i class="iconfont">&#xe762;</i></span>发现
       </mt-tab-item>
-      <mt-tab-item id="video">
+      <mt-tab-item id="2">
         <span slot="icon" class="icon-span"><i class="iconfont iconfont-video">&#xe787;</i></span>视频
       </mt-tab-item>
-      <mt-tab-item id="mine">
+      <mt-tab-item id="3">
         <span slot="icon" class="icon-span"><i class="iconfont">&#xe600;</i></span>我的
       </mt-tab-item>
-      <mt-tab-item id="interflow">
+      <mt-tab-item id="4">
         <span slot="icon" class="icon-span"><i class="iconfont">&#xe693;</i></span>云村
       </mt-tab-item>
-      <mt-tab-item id="account">
+      <mt-tab-item id="5">
         <span slot="icon" class="icon-span"><i class="iconfont">&#xe601;</i></span>帐号
       </mt-tab-item>
     </mt-tabbar>
@@ -22,30 +23,36 @@
 </template>
 
 <script>
+import Head from './pages/head'
+
 export default {
   name: 'App',
+  components: { Head },
   data () {
     return {
-      selected: 'discover'
+      selected: '1'
     }
+  },
+  created() {
+    
   },
   watch: {
     selected: function(val) {
       const self = this
       switch (val) {
-        case "discover":
+        case "1":
           self.$router.push("/discover");
           break;
-        case "video":
+        case "2":
           self.$router.push("/video");
           break;
-        case "mine":
+        case "3":
           self.$router.push("/mine");
           break;
-        case "interflow":
+        case "4":
           self.$router.push("/interflow");
           break;
-        case "account":
+        case "5":
           self.$router.push("/account");
           break;
       }
@@ -69,6 +76,7 @@ export default {
   } 
   #app{
     padding-top: 40px;
+    padding-bottom: 60px;
   }
   .icon-span{
     display: block;
@@ -90,17 +98,20 @@ export default {
   .iconfont-video{
     font-size: 20px;
   }
+  .mint-tabbar.is-fixed{
+    z-index: 9;
+  }
   .mint-tabbar{
     background: #fff;
-    box-shadow: 0 0 6px #d9d9d9;
+    /* box-shadow: 0 0 6px #d9d9d9; */
     color: #999;
   }
   .mint-tabbar > .mint-tab-item.is-selected{
     background-color: unset;
-    color: #d81e06;
+    color: #FF352C;
   }
   .mint-tabbar > .mint-tab-item.is-selected .icon-span{
-    background: #d81e06;
+    background: #FF352C;
   }
   .mint-tabbar > .mint-tab-item.is-selected .iconfont-video{
     font-size: 14px;

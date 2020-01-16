@@ -1,6 +1,5 @@
 <template>
-  <div class="global">
-    <Head></Head>
+  <div class="page-discover">
     <div class="banner-box">
       <mt-swipe :auto="5000">
         <mt-swipe-item class="bannerInfo">
@@ -37,67 +36,77 @@
         <span class="list-info-span"><i class="iconfont" style="font-size: 38px;">&#xe608;</i></span>直播
       </li>
     </ul>
-    <!-- 推荐歌单 -->
-    <div class="recommend">
-      <div class="recommend-head">
-        <span class="recommend-head-title">推荐歌单</span>
-        <span class="recommend-head-btn">歌单广场</span>
+    <div class="part-box">
+      <div class="partHead">
+        <p class="partHead-title">推荐歌单</p>
+        <p class="partHead-subTitle">为你精挑细选</p>
+        <div class="pratHead-btn">查看更多</div>
       </div>
-      <ul class="songsList">
-        <li class="songsList-item" v-for="(item, index) in songsList" :key="index">
-          <div class="songsImg-box">
-            <img :src="item.picUrl" width="100%"/>
-            <div class="songsCount">
-              <i class="iconfont">&#xe611;</i>{{item.count}}
-            </div>
-          </div>
-          <p class="songsImg-title">{{item.name}}</p>
-        </li>
-      </ul>
-    </div>
-    <!-- 新碟 -->
-    <div class="recommend">
-      <div class="recommend-head">
-        <ul class="newSongTag">
-          <li class="newSongLi" @click="handleClick(1)">新碟</li>
-          <li class="newSongLi" @click="handleClick(2)">新歌</li>
-        </ul>
-        <span class="recommend-head-btn">{{tagStatus==1?'更多新碟':'新歌推荐'}}</span>
-      </div>
-      <div class="newSong">
-        <ul class="songsList">
-          <li class="songsList-item" v-for="(item, index) in newSongs" :key="index">
-            <div class="songsImg-box">
+      <div style="padding: 0 20px;">
+        <swiper class="swiper-box" :options="swiperOption">
+          <swiper-slide class="swiper-slide" v-for="(item, index) in recommendList" :key="index">
+            <div class="recommendCover">
               <img :src="item.picUrl" width="100%"/>
+              <div class="recommendCount">
+                <i class="iconfont">&#xe611;</i>{{item.count}}
+              </div>
             </div>
-            <p class="songsName">{{item.name}}</p>
-            <p class="songsSinger">{{item.singer}}</p>
-          </li>
-        </ul>
+            <p class="recommendName">{{item.name}}</p>
+          </swiper-slide>
+        </swiper>
       </div>
     </div>
-    <!-- <div class="chosen">
-      <div class="chosen-head">
-        <span class="chosen-title">云村精选</span>
-        <span class="chosen-reload"><i class="iconfont">&#xe619;</i>获取新内容</span>
+    <div class="part-box">
+      <div class="partHead">
+        <p class="partHead-title">推荐歌单</p>
+        <p class="partHead-subTitle">为你精挑细选</p>
+        <div class="pratHead-btn">查看更多</div>
       </div>
-      <div class="chosen-info">
-        <p class="chosen-info-title"></p>
+      <div style="padding: 0 20px;">
+        <swiper class="swiper-box" :options="swiperOption">
+          <swiper-slide class="swiper-slide" v-for="(item, index) in recommendList" :key="index">
+            <div class="recommendCover">
+              <img :src="item.picUrl" width="100%"/>
+              <div class="recommendCount">
+                <i class="iconfont">&#xe611;</i>{{item.count}}
+              </div>
+            </div>
+            <p class="recommendName">{{item.name}}</p>
+          </swiper-slide>
+        </swiper>
       </div>
-    </div> -->
+    </div>
+    <div class="part-box">
+      <div class="partHead">
+        <p class="partHead-title">推荐歌单</p>
+        <p class="partHead-subTitle">为你精挑细选</p>
+        <div class="pratHead-btn">查看更多</div>
+      </div>
+      <div style="padding: 0 20px;">
+        <swiper class="swiper-box" :options="swiperOption">
+          <swiper-slide class="swiper-slide" v-for="(item, index) in recommendList" :key="index">
+            <div class="recommendCover">
+              <img :src="item.picUrl" width="100%"/>
+              <div class="recommendCount">
+                <i class="iconfont">&#xe611;</i>{{item.count}}
+              </div>
+            </div>
+            <p class="recommendName">{{item.name}}</p>
+          </swiper-slide>
+        </swiper>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
   import $ from 'jquery'
-  import Head from './head'
 
   export default {
     name: 'Discover',
-    components: { Head },
     data () {
       return {
-        songsList: [
+        recommendList: [
           { picUrl: '//p2.music.126.net/6UcYavdWh8uqCVlnX1JdUA==/109951164476679445.jpg', name: '『深情盛宴』陷入直抵心灵的旖旎女声中', count: '69万' },
           { picUrl: '//p2.music.126.net/56SGVMCp45NSceH3In5PnQ==/109951164092616590.jpg', name: '总有些惊奇的际遇，比方说当我遇见你', count: '151万' },
           { picUrl: '//p2.music.126.net/_ldY-Tf5dCIubyyeATSrdA==/109951164322846413.jpg', name: '你搜不到的土嗨神曲', count: '571万' },
@@ -105,8 +114,11 @@
           { picUrl: '//p2.music.126.net/1gNcBmzdIaQtU00Dvp_TvQ==/109951163912081772.jpg', name: '好听到单曲循环', count: '11896万' },
           { picUrl: '//p2.music.126.net/2DiDwfr6MkS6FtCuDQ9lkQ==/109951164508694085.jpg', name: '你好2020♡', count: '9516万' }
         ],
-        tagStatus: 1,
-        newSongs: []
+        swiperOption: {
+          slidesPerView: 3.5,
+          spaceBetween: 10,
+          freeMode: true,
+        }
       }
     },
     mounted() {
