@@ -1,20 +1,20 @@
 <template>
   <div id="app">
-    <Head :tabindex="selected"></Head>
+    <Head :tabSelect="selected"></Head>
     <mt-tabbar fixed v-model="selected" style="background:#F8F8F8;z-index:9;">
-      <mt-tab-item id="1">
+      <mt-tab-item id="discover">
         <span slot="icon" class="icon-span"><i class="iconfont">&#xe762;</i></span>发现
       </mt-tab-item>
-      <mt-tab-item id="2">
+      <mt-tab-item id="video">
         <span slot="icon" class="icon-span"><i class="iconfont iconfont-video">&#xe787;</i></span>视频
       </mt-tab-item>
-      <mt-tab-item id="3">
+      <mt-tab-item id="mine">
         <span slot="icon" class="icon-span"><i class="iconfont">&#xe600;</i></span>我的
       </mt-tab-item>
-      <mt-tab-item id="4">
+      <mt-tab-item id="interflow">
         <span slot="icon" class="icon-span"><i class="iconfont">&#xe693;</i></span>云村
       </mt-tab-item>
-      <mt-tab-item id="5">
+      <mt-tab-item id="account">
         <span slot="icon" class="icon-span"><i class="iconfont">&#xe601;</i></span>帐号
       </mt-tab-item>
     </mt-tabbar>
@@ -30,30 +30,33 @@ export default {
   components: { Head },
   data () {
     return {
-      selected: '1'
+      selected: 'discover'
     }
   },
   created() {
-    
+    this.selected = location.pathname.slice(1,location.pathname.length)
   },
   watch: {
     selected: function(val) {
       const self = this
       switch (val) {
-        case "1":
+        case "discover":
           self.$router.push("/discover");
           break;
-        case "2":
+        case "video":
           self.$router.push("/video");
           break;
-        case "3":
+        case "mine":
           self.$router.push("/mine");
           break;
-        case "4":
+        case "interflow":
           self.$router.push("/interflow");
           break;
-        case "5":
+        case "account":
           self.$router.push("/account");
+          break;
+        default:
+          self.$router.push("/discover");
           break;
       }
     }
@@ -118,6 +121,6 @@ export default {
   }
   .mint-tabbar > .mint-tab-item.is-selected .iconfont{
     color: #fff;
-    font-size: 18px;
+    font-size: 20px;
   }
 </style>

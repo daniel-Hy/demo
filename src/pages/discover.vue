@@ -126,7 +126,6 @@
       $(function() {
         const itemWidth = $('.songsList').find('.songsList-item').width()
         $('.songsList').find('.songsImg-box').height(itemWidth)
-        $('.banner-box').height($('.mint-swipe-item img').height())
         self.handleClick(1)
       })
     }, 

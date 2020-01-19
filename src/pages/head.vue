@@ -1,11 +1,14 @@
 <template>
-  <div class="page-head" :style="{background: tabindex==5?'#808080':''}">
+  <div class="page-head" :class="{'accountBg':tabSelect=='account','mineBg':tabSelect=='mine'}">
     <span class="head-left">
-      <i class="iconfont" v-if="tabindex==1">&#xe64f;</i>
-      <i class="iconfont" style="color: #fff;" v-if="tabindex==5">&#xe68b;</i>
+      <i class="iconfont" v-if="tabSelect=='discover'">&#xe64f;</i>
+      <i class="iconfont" v-if="tabSelect=='video'">&#xe77e;</i>
+      <i class="iconfont" v-if="tabSelect=='mine'">&#xe607;</i>
+      <i class="iconfont" v-if="tabSelect=='interflow'">&#xe7a4;</i>
+      <i class="iconfont" style="color: #fff;" v-if="tabSelect=='account'">&#xe68b;</i>
     </span>
     <div class="head-center">
-      <input type="text" class="searchText iconfont" :placeholder="icon" v-if="tabindex==1||tabindex==2"/>
+      <input type="text" class="searchText iconfont" :placeholder="icon" v-if="tabSelect=='discover'||tabSelect=='video'"/>
     </div>
     <span class="head-right">
       <!-- <i class="iconfont">&#xe64f;</i> -->
@@ -17,7 +20,7 @@
 <script>
   export default {
     name: 'Head',
-    props:['tabindex'],
+    props:['tabSelect'],
     data () {
       return {
         icon:'\ue626 搜索音乐、视频、歌词、电台'
@@ -91,5 +94,10 @@
       100%{-webkit-transform:rotate(360deg);}
     }
   }
-  
+  .accountBg{
+    background: #808080;
+  }
+  .mineBg{
+    background: unset;
+  }
 </style>
