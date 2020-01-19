@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Head :tabindex="selected"></Head>
-    <mt-tabbar fixed v-model="selected" style="background:#F8F8F8 ">
+    <mt-tabbar fixed v-model="selected" style="background:#F8F8F8;z-index:9;">
       <mt-tab-item id="1">
         <span slot="icon" class="icon-span"><i class="iconfont">&#xe762;</i></span>发现
       </mt-tab-item>
@@ -105,10 +105,10 @@ export default {
     background: #fff;
     /* box-shadow: 0 0 6px #d9d9d9; */
     color: #999;
-  }
+  } 
   .mint-tabbar > .mint-tab-item.is-selected{
-    background-color: unset;
-    color: #FF352C;
+    background-color: unset !important;
+    color: #FF352C !important;
   }
   .mint-tabbar > .mint-tab-item.is-selected .icon-span{
     background: #FF352C;
