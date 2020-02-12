@@ -3,7 +3,7 @@
     <span class="head-left">
       <i class="iconfont" v-if="tabSelect=='discover'">&#xe64f;</i>
       <i class="iconfont" v-if="tabSelect=='video'">&#xe77e;</i>
-      <i class="iconfont" v-if="tabSelect=='mine'">&#xe607;</i>
+      <i class="iconfont" style="color: #fff;" v-if="tabSelect=='mine'">&#xe607;</i>
       <i class="iconfont" v-if="tabSelect=='interflow'">&#xe7a4;</i>
       <i class="iconfont" style="color: #fff;" v-if="tabSelect=='account'">&#xe68b;</i>
     </span>
