@@ -2,30 +2,26 @@
   <div class="mine-global">
     <div class="mine-global-cover">
       <div class="mine-head">
-        <img class="avatar" src="//p2.music.126.net/6UcYavdWh8uqCVlnX1JdUA==/109951164476679445.jpg"/>
+        <img class="avatar" :src="$store.getters.getStorage.avatarUrl"/>
         <div class="mine-info">
           <div class="mine-info-nickName">
-            <span>大元子</span>
+            <span>{{$store.getters.getStorage.nickname}}</span>
             <span>开通黑胶VIP<i class="iconfont">&#xe606;</i></span>
           </div>
           <span class="mine-info-level">Lv9</span>
         </div>
         <ul class="mine-btn">
           <li>
-            <i class="iconfont">&#xe60a;</i>
-            <span>本地音乐</span>
+            <i class="iconfont">&#xe60a;</i><span>本地音乐</span>
           </li>
           <li>
-            <i class="iconfont">&#xe60c;</i>
-            <span>我的电台</span>
+            <i class="iconfont">&#xe60c;</i><span>我的电台</span>
           </li>
           <li>
-            <i class="iconfont">&#xe60b;</i>
-            <span>我的收藏</span>
+            <i class="iconfont">&#xe60b;</i><span>我的收藏</span>
           </li>
           <li>
-            <i class="iconfont">&#xeb9f;</i>
-            <span>关注新歌</span>
+            <i class="iconfont">&#xeb9f;</i><span>关注新歌</span>
           </li>
         </ul>
       </div>
@@ -38,8 +34,11 @@
             <i class="iconfont">&#xe606;</i>5项下载失败
           </span>
         </div>
+        <!-- 我的音乐 -->
         <div class="mine-music">
-          <span class="mine-music-title">我的音乐</span>
+          <div>
+            <span class="mine-music-title">我的音乐</span>
+          </div>
           <swiper class="swiper-box" :options="swiperOption">
             <swiper-slide class="swiper-slide" v-for="(item, index) in musicList" :key="index">
               <img class="slide-bgImg" :src="item.bgImg" v-if="item.bgImg"/>
@@ -54,18 +53,40 @@
             </swiper-slide>
           </swiper>
         </div>
+        <!-- 最近播放 -->
+        <div class="recentTime">
+          <div class="part-head">
+            <span class="mine-music-title">最近播放</span>
+          </div>
+          <swiper class="swiper-box" :options="recentOption">
+            <swiper-slide class="swiper-slide recent-slide" v-for="(item, index) in 4" :key="index">
+              <img class="recent-coverImg" src="//p2.music.126.net/6UcYavdWh8uqCVlnX1JdUA==/109951164476679445.jpg"/>
+              <div class="recent-info">
+                <span>全部已播放歌曲</span>
+                <span>300首</span>
+              </div>
+            </swiper-slide>
+          </swiper>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import { getUserInfo, getUserSubcount } from '@/api/userInfo'
+
   export default {
     name: 'Mine',
     data () {
       return {
         swiperOption: {
           slidesPerView: 3,
+          spaceBetween: 10,
+          freeMode: true,
+        },
+        recentOption: {
+          slidesPerView: 2,
           spaceBetween: 10,
           freeMode: true,
         },
@@ -76,6 +97,36 @@
           { isRecommend: true, iconfont: '&#xe60d;', iconColor: '#926262', title: '最嗨电音', tips: '专业电音平台', isXD: false, bgImg: '' },
           { isRecommend: true, iconfont: '&#xe60d;', iconColor: '#926262', title: 'ACG专区', tips: '好听好玩ACG', isXD: false, bgImg: '' }
         ]
+      }
+    },
+    created() {
+      const self = this
+      self.fetchUserInfo()
+      self.fetchSubcount()
+    },
+    methods: {
+      // 获取用户详情
+      fetchUserInfo() {
+        const self = this
+        const uid = self.$store.getters.getStorage.id
+        getUserInfo({
+          uid: uid
+        }).then(res => {
+          
+        }).catch(err => {
+          self.$message({
+            type: 'error',
+            message: '获取用户详情错误'
+          })
+        })
+      },
+      // 获取用户信息 , 歌单，收藏，mv, dj 数量
+      fetchSubcount() {
+        getUserSubcount().then(res => {
+          console.log(res)
+        }).catch(err => {
+
+        })
       }
     }
   }
@@ -191,62 +242,77 @@
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     height: 200px;
-    .mine-music-title{
+  }
+  .swiper-box{
+    width: calc(100% - 30px);
+  }
+  .swiper-slide{
+    background: #ccc;
+    border-radius: 8px;
+    height: 150px;
+    overflow: hidden;
+  }
+  .slide-bgImg{
+    width: 100%;
+    height: 100%;
+  }
+  .slide-float{
+    position: absolute;
+    background: rgba(0, 0, 0, .4);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .isRecommend{
+    display: block;
+    padding: 8px 0;
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+    height: 16px;
+  }
+  .slide-float-body{
+    text-align: center;
+    margin-top: 10px;
+  }
+  .slide-float-body .iconfont{
+    font-size: 28px;
+    color: #fff;
+  }
+  .float-title{
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+  }
+  .float-tips{
+    position: absolute;
+    padding: 12px 0;
+    bottom: 0;
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+    width: 100%;
+  }
+  .mine-music-title{
+    display: inline-block;
+    padding: 15px;
+    font-weight: bold;
+  }
+  .recentTime{
+    background: #fff;
+    .recent-slide{
+      background:#fff;
+      height: 60px;
+    }
+    .recent-coverImg{
       display: inline-block;
-      padding: 15px;
-      font-weight: bold;
-    }
-    .swiper-box{
-      width: calc(100% - 30px);
-    }
-    .swiper-slide{
-      background: #ccc;
       border-radius: 8px;
-      height: 150px;
-      overflow: hidden;
+      width: 60px;
     }
-    .slide-bgImg{
-      width: 100%;
-      height: 100%;
-    }
-    .slide-float{
-      position: absolute;
-      background: rgba(0, 0, 0, .4);
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-    .isRecommend{
-      display: block;
-      padding: 8px 0;
-      text-align: center;
-      font-size: 12px;
-      color: #fff;
-      height: 16px;
-    }
-    .slide-float-body{
-      text-align: center;
-      margin-top: 10px;
-    }
-    .slide-float-body .iconfont{
-      font-size: 28px;
-      color: #fff;
-    }
-    .float-title{
-      display: block;
-      text-align: center;
-      font-size: 12px;
-      color: #fff;
-    }
-    .float-tips{
-      position: absolute;
-      padding: 12px 0;
-      bottom: 0;
-      text-align: center;
-      font-size: 12px;
-      color: #fff;
-      width: 100%;
+    .recent-info{
+      display: inline-block;
     }
   }
 }

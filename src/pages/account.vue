@@ -6,8 +6,8 @@
     <div class="stickyDiv"><div></div></div>
     <div class="userInfo-box">
       <div class="userInfo-head">
-        <img class="avatar" src="//p2.music.126.net/6UcYavdWh8uqCVlnX1JdUA==/109951164476679445.jpg"/>
-        <span class="nickName">大元子</span>
+        <img class="avatar" :src="$store.getters.getStorage.avatarUrl"/>
+        <span class="nickName">{{$store.getters.getStorage.nickname}}</span>
         <div class="signIn"><i class="iconfont">&#xe618;</i><span>签到</span></div>
       </div>
       <ul class="gn-list">

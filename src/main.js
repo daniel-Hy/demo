@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import Mint from 'mint-ui'
 import vueSwiper from 'vue-awesome-swiper'
+import store from './store/index'
 
 Vue.use(Mint)
 Vue.use(vueSwiper)
@@ -17,6 +18,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,  // 引入store
   components: { App },
   template: '<App/>'
 })

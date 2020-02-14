@@ -24,6 +24,7 @@
 
 <script>
 import Head from './pages/head'
+import { userLogin } from '@/api/userInfo'
 
 export default {
   name: 'App',
@@ -34,7 +35,9 @@ export default {
     }
   },
   created() {
-    this.selected = location.pathname.slice(1,location.pathname.length)
+    const self = this
+    self.selected = location.pathname.slice(1,location.pathname.length)
+    self.toLogin()
   },
   watch: {
     selected: function(val) {
@@ -61,6 +64,30 @@ export default {
       }
     }
   },
+  methods: {
+    toLogin() {
+      const self = this
+      let user = {}
+      userLogin({
+        phone: '17816118163',
+        password: 'hy992455058'
+      }).then(res => {
+        user = {
+          id: res.account.id,
+          token: res.token,
+          backgroundUrl: res.profile.backgroundUrl,
+          avatarUrl: res.profile.avatarUrl,
+          nickname: res.profile.nickname
+        }
+        self.$store.commit('$_setStorage', user)
+      }).catch(err => {
+        self.$message({
+          type: 'error',
+          message: '获取登录信息失败'
+        })
+      })
+    }
+  }
 }
 </script>
 
