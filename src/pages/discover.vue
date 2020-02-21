@@ -171,5 +171,5 @@
   }
 </style>
 <style lang="scss" scoped>
-  @import './css/discover.scss'
+  @import './css/discover.scss';
 </style>

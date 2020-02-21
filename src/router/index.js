@@ -5,6 +5,7 @@ import Video from '@/pages/video'
 import Mine from '@/pages/mine'
 import Interflow from '@/pages/interflow'
 import Account from '@/pages/account'
+import Detail from '@/pages/detail'
 
 Vue.use(Router)
 
@@ -43,6 +44,10 @@ export default new Router({
       path: '/account',
       name: 'account',
       component: Account
+    },{
+      path: '/detail',
+      name: 'detail',
+      component: Detail
     }
   ]
 })

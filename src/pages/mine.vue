@@ -1,5 +1,5 @@
 <template>
-  <div class="mine-global">
+  <div class="mine-global" :style="{'background-image': 'url('+userInfo.backgroundUrl+')'}">
     <div class="mine-global-cover">
       <div class="mine-head">
         <img class="avatar" :src="$store.getters.getStorage.avatarUrl"/>
@@ -8,7 +8,7 @@
             <span>{{$store.getters.getStorage.nickname}}</span>
             <span>开通黑胶VIP<i class="iconfont">&#xe606;</i></span>
           </div>
-          <span class="mine-info-level">Lv9</span>
+          <span class="mine-info-level">Lv{{userLevel}}</span>
         </div>
         <ul class="mine-btn">
           <li>
@@ -25,15 +25,6 @@
           </li>
         </ul>
       </div>
-      <div class="mine-body">
-        <div class="download-list">
-          <span class="download-list-title">
-            <i class="iconfont">&#xe60a;</i>下载列表
-          </span>
-          <span class="download-list-tips">
-            <i class="iconfont">&#xe606;</i>5项下载失败
-          </span>
-        </div>
         <!-- 我的音乐 -->
         <div class="mine-music">
           <div>
@@ -68,13 +59,41 @@
             </swiper-slide>
           </swiper>
         </div>
+        <!-- 歌单 -->
+        <div style="background: #fff;padding-top: 20px;">
+          <ul class="songsList-nav">
+            <li @click="tabClick(1)" :style="{color: songsActive=='container1'?'#000':'#999'}">创建歌单</li>
+            <li @click="tabClick(2)" :style="{color: songsActive=='container2'?'#000':'#999'}">收藏歌单</li>
+          </ul>
+          <mt-tab-container class="songsList-box" v-model="songsActive">
+            <mt-tab-container-item id="container1">
+              <div class="songsList-item" v-for="item in createList" @click="toDetail(item)">
+                <img class="songsList-coverUrl" :src="item.coverImgUrl"/>
+                <div class="songsList-name">
+                  <span>{{item.name}}</span>
+                  <span>{{item.trackCount}}首</span>
+                </div>
+              </div>
+            </mt-tab-container-item>
+            <mt-tab-container-item id="container2">
+              <div class="songsList-item" v-for="item in collectList" @click="toDetail(item)">
+                <img class="songsList-coverUrl" :src="item.coverImgUrl"/>
+                <div class="songsList-name">
+                  <span>{{item.name}}</span>
+                  <span>{{item.trackCount}}首</span>
+                </div>
+              </div>
+            </mt-tab-container-item>
+          </mt-tab-container>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import { getUserInfo, getUserSubcount } from '@/api/userInfo'
+  import { getUserInfo, getUserSubcount, getUserPlaylist } from '@/api/userInfo'
+  import { Toast } from 'mint-ui'
 
   export default {
     name: 'Mine',
@@ -91,18 +110,24 @@
           freeMode: true,
         },
         musicList: [
-          { isRecommend: false, iconfont: '&#xe60e;', iconColor: '#FC625A', title: '我喜欢的音乐', tips: '心动模式', isXD: true, bgImg: '//p2.music.126.net/6UcYavdWh8uqCVlnX1JdUA==/109951164476679445.jpg' },
-          { isRecommend: false, iconfont: '&#xe689;', iconColor: '#fff', title: '私人FM', tips: '最懂你的推荐', isXD: false, bgImg: '//p2.music.126.net/6UcYavdWh8uqCVlnX1JdUA==/109951164476679445.jpg' },
+          { isRecommend: false, iconfont: '&#xe60e;', iconColor: '#FC625A', title: '我喜欢的音乐', tips: '心动模式', isXD: true, bgImg: '' },
+          { isRecommend: false, iconfont: '&#xe689;', iconColor: '#926262', title: '私人FM', tips: '最懂你的推荐', isXD: false, bgImg: '' },
           { isRecommend: true, iconfont: '&#xe60d;', iconColor: '#926262', title: '古典专区', tips: '专业古典大全', isXD: false, bgImg: '' },
           { isRecommend: true, iconfont: '&#xe60d;', iconColor: '#926262', title: '最嗨电音', tips: '专业电音平台', isXD: false, bgImg: '' },
           { isRecommend: true, iconfont: '&#xe60d;', iconColor: '#926262', title: 'ACG专区', tips: '好听好玩ACG', isXD: false, bgImg: '' }
-        ]
+        ],
+        userLevel: '', // 用户等级
+        userInfo: {}, // 用户信息
+        songsActive: 'container1',
+        songsList: [], // 用户歌单
+        createList: [], // 创建歌单列表
+        collectList: [], // 收藏歌单列表
       }
     },
     created() {
       const self = this
       self.fetchUserInfo()
-      self.fetchSubcount()
+      self.fetchUserPlaylist()
     },
     methods: {
       // 获取用户详情
@@ -112,208 +137,46 @@
         getUserInfo({
           uid: uid
         }).then(res => {
-          
+          self.userLevel = res.level
+          self.userInfo = res.profile
         }).catch(err => {
-          self.$message({
-            type: 'error',
-            message: '获取用户详情错误'
-          })
+          Toast('获取用户详情错误!')
         })
       },
-      // 获取用户信息 , 歌单，收藏，mv, dj 数量
-      fetchSubcount() {
-        getUserSubcount().then(res => {
-          console.log(res)
+      // 获取用户歌单
+      fetchUserPlaylist() {
+        const self = this
+        const uid = self.$store.getters.getStorage.id
+        const nickname = self.$store.getters.getStorage.nickname
+        getUserPlaylist({
+          uid: uid
+        }).then(res => {
+          self.songsList = res.playlist
+          self.musicList[0].bgImg = self.songsList[0].coverImgUrl
+          self.songsList.map((item, index) => {
+            if (index>0) {
+              if (item.creator.nickname == nickname) self.createList.push(item)
+              else self.collectList.push(item)
+            }
+          })
         }).catch(err => {
-
+          Toast('获取用户歌单错误!')
         })
+      },
+      // 切换歌单
+      tabClick(type) {
+        const self = this
+        self.songsActive = 'container' + type
+      },
+      // 跳转详情
+      toDetail(item) {
+        const self = this
+        self.$router.push({name: 'detail', params: {id: item.id}})
       }
     }
   }
 </script>
 
-<style  lang="scss" scoped>
-.mine-global{
-  position: absolute;
-  background: url('../assets/img/download.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  overflow-y: scroll;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  .mine-global-cover{
-    background: rgba(0,0,0,0.3);
-  }
-  .mine-head{
-    padding: 60px 15px 0 15px;
-    .avatar{
-      vertical-align: middle;
-      display: inline-block;
-      border-radius: 50%;
-      width: 40px;
-    }
-  }
-  .mine-info{
-    vertical-align: middle;
-    display: inline-block;
-    text-indent: 5px;
-    width: calc(100% - 45px);
-    .mine-info-nickName{
-      display: flex;
-    }
-    .mine-info-nickName span{
-      flex: 1;
-    }
-    .mine-info-nickName .iconfont{
-      float: right;
-      font-size: 16px;
-      margin-left: -5px;
-    }
-    .mine-info-nickName span:first-child{
-      color: #fff;
-      font-size: 16px;
-      line-height: 16px;
-    }
-    .mine-info-nickName span:last-child{
-      color: #999;
-      text-align: right;
-      font-size: 12px;
-    }
-    .mine-info-level{
-      background: rgba(153, 153, 153, .7);
-      border-radius: 10px;
-      padding: 0px 8px;
-      margin-left: 5px;
-      text-align: center;
-      font-size: 12px;
-      line-height: 12px;
-      color: #fff;
-    }
-  }
-  .mine-btn{
-    display: flex;
-    margin: 25px 0 10px -15px;
-    text-align: center;
-    width: calc(100% + 30px);
-    li{
-      flex: 1;
-      color: #fff;
-    }
-    li .iconfont{
-      font-size: 32px;
-    }
-    li span{
-      display: block;
-      font-size: 14px;
-    }
-  }
-  .mine-body{
-    background: rgba(204, 204, 204, .7);
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-  }
-  .download-list{
-    padding: 15px;
-    font-size: 14px;
-    display: flex;
-    .download-list-title{
-      flex: 1;
-      line-height: 20px;
-    }
-    .download-list-title .iconfont{
-      vertical-align: middle;
-      margin-right: 5px;
-      font-size: 18px;
-    }
-    .download-list-tips{
-      flex: 1;
-      font-size: 12px;
-      line-height: 20px;
-      text-align: right;
-    }
-    .download-list-tips .iconfont{
-      float: right;
-      margin-right: -5px;
-    }
-  }
-  .mine-music{
-    background: #fff;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    height: 200px;
-  }
-  .swiper-box{
-    width: calc(100% - 30px);
-  }
-  .swiper-slide{
-    background: #ccc;
-    border-radius: 8px;
-    height: 150px;
-    overflow: hidden;
-  }
-  .slide-bgImg{
-    width: 100%;
-    height: 100%;
-  }
-  .slide-float{
-    position: absolute;
-    background: rgba(0, 0, 0, .4);
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-  .isRecommend{
-    display: block;
-    padding: 8px 0;
-    text-align: center;
-    font-size: 12px;
-    color: #fff;
-    height: 16px;
-  }
-  .slide-float-body{
-    text-align: center;
-    margin-top: 10px;
-  }
-  .slide-float-body .iconfont{
-    font-size: 28px;
-    color: #fff;
-  }
-  .float-title{
-    display: block;
-    text-align: center;
-    font-size: 12px;
-    color: #fff;
-  }
-  .float-tips{
-    position: absolute;
-    padding: 12px 0;
-    bottom: 0;
-    text-align: center;
-    font-size: 12px;
-    color: #fff;
-    width: 100%;
-  }
-  .mine-music-title{
-    display: inline-block;
-    padding: 15px;
-    font-weight: bold;
-  }
-  .recentTime{
-    background: #fff;
-    .recent-slide{
-      background:#fff;
-      height: 60px;
-    }
-    .recent-coverImg{
-      display: inline-block;
-      border-radius: 8px;
-      width: 60px;
-    }
-    .recent-info{
-      display: inline-block;
-    }
-  }
-}
+<style lang="scss" scoped>
+  @import './css/mine.scss';
 </style>
