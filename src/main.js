@@ -6,6 +6,7 @@ import router from './router'
 import Mint from 'mint-ui'
 import vueSwiper from 'vue-awesome-swiper'
 import store from './store/index'
+import 'babel-polyfill'
 
 Vue.use(Mint)
 Vue.use(vueSwiper)

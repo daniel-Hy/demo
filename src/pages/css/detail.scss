@@ -1,16 +1,16 @@
 .page-detail{
   position: absolute;
   background-size: contain;
-  padding-bottom: 60px;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 }
 .head-box{
-  position: relative;
+  position: sticky;
   background: rgba(0, 0, 0, .3);
   color: #fff;
+  top: 0;
   .detail-head-box{
     position: absolute;
     top: 0;
@@ -24,7 +24,7 @@
 }
 .detail-head{
   margin: 0 auto;
-  padding-top: 70px;
+  padding-top: 80px;
   width: calc(100% - 30px);
   .coverImgUrl-box{
     display: inline-block;
@@ -61,9 +61,14 @@
     }
   }
   .editDetail{
+    position: relative;
     display: block;
     margin-top: 40px;
     font-size: 12px;
+    overflow: hidden;    
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 220px;
   }
 }
 .operate{
@@ -81,16 +86,99 @@
 }
 .detail-songsList{
   background: #fff;
-  height: 500px;
+  margin-top: -10px;
   .stickyDiv{
-    position: sticky;
-    margin-top: -20px;
-    top: 40px;
+    position: absolute;
+    width: 100%;
     .songsList-box{
+      padding: 0 15px;
       background: #fff;
       border-top-left-radius: 20px;
       border-top-right-radius: 20px;
-      height: 900px;
     }
   }
+  .songsList-head{
+    position: sticky;
+    background: #fff;
+    padding: 10px 0;
+    line-height: 26px;
+    top: 50px;
+    z-index: 2;
+    .iconfont,
+    .playAll{
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .playAll{
+      margin: 0;
+      font-size: 16px;
+      span{
+        margin-left: 3px;
+        font-size: 12px;
+        color: #999;
+      }
+    }
+  }
+  .tracks{
+    padding-bottom: 60px;
+    .tracks-item{
+      position: relative;
+      padding: 10px 0;
+    }
+    .tracks-item-disable{
+      .tracks-no,
+      .tracks-info,
+      .tracks-title,
+      .tracks-subTitle,
+      .tracks-singer{
+        color: #ddd;
+      }
+    }
+    .tracks-no{
+      position: absolute;
+      color: #999;
+      font-size: 16px;
+      left: -6px;
+      top: 18px;
+      text-align: center;
+      width: 30px;
+    }
+    .tracks-info{
+      margin-left: 30px;
+      width: 280px;
+    }
+    .tracks-title{
+      display: block;
+      overflow: hidden;    
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 16px;
+    }
+    .tracks-subTitle{
+      margin-left: 3px;
+      font-size: 14px;
+      color: #999;
+    }
+    .tracks-singer{
+      font-size: 12px;
+      color: #999;
+    }
+  }
+}
+.fixed-box{
+  position: fixed;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  top: 40px;
+  overflow-y: scroll;
+  width: 100%;
+  height: 100%;
+}
+.musicPlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
 }

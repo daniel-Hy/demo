@@ -138,5 +138,5 @@
   }
 </style>
 <style lang="scss" scoped>
-  @import './css/account.scss'
+  @import './css/account.scss';
 </style>

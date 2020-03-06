@@ -2,13 +2,13 @@
   <div id="app">
     <Head :tabSelect="selected"></Head>
     <mt-tabbar fixed v-model="selected" style="background:#F8F8F8;z-index:9;">
-      <mt-tab-item id="discover">
+      <mt-tab-item id="discover" @click.native="tabClick('discover')">
         <span slot="icon" class="icon-span"><i class="iconfont">&#xe762;</i></span>发现
       </mt-tab-item>
       <mt-tab-item id="video">
-        <span slot="icon" class="icon-span"><i class="iconfont iconfont-video">&#xe787;</i></span>视频
+        <span slot="icon" class="icon-span"><i class="iconfont iconfont-video">&#xe656;</i></span>视频
       </mt-tab-item>
-      <mt-tab-item id="mine">
+      <mt-tab-item id="mine" @click.native="tabClick('mine')">
         <span slot="icon" class="icon-span"><i class="iconfont">&#xe600;</i></span>我的
       </mt-tab-item>
       <mt-tab-item id="interflow">
@@ -25,18 +25,20 @@
 <script>
 import Head from './pages/head'
 import { userLogin } from '@/api/userInfo'
+import { Toast } from 'mint-ui'
 
 export default {
   name: 'App',
   components: { Head },
   data () {
     return {
-      selected: 'discover'
+      selected: ''
     }
   },
   created() {
     const self = this
     self.selected = location.pathname.slice(1,location.pathname.length)
+    self.selected = 'discover'
     self.toLogin()
   },
   watch: {
@@ -81,11 +83,12 @@ export default {
         }
         self.$store.commit('$_setStorage', user)
       }).catch(err => {
-        self.$message({
-          type: 'error',
-          message: '获取登录信息失败'
-        })
+        Toast('获取登录信息失败')
       })
+    },
+    tabClick(tab) {
+      const self = this
+      self.$router.push("/" + tab)
     }
   }
 }
@@ -105,7 +108,7 @@ export default {
     display: block;
   } 
   #app{
-    padding-top: 40px;
+    padding-top: 50px;
     padding-bottom: 60px;
   }
   .icon-span{
@@ -126,7 +129,7 @@ export default {
     font-size: 24px;
   }
   .iconfont-video{
-    font-size: 20px;
+    font-size: 22px;
   }
   .mint-tabbar.is-fixed{
     z-index: 9;
@@ -148,6 +151,6 @@ export default {
   }
   .mint-tabbar > .mint-tab-item.is-selected .iconfont{
     color: #fff;
-    font-size: 20px;
+    font-size: 18px;
   }
 </style>

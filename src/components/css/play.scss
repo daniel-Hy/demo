@@ -1,0 +1,233 @@
+.page-play{
+  background: rgba(255, 255, 255, 1);
+  .coverImgUrl-bg{
+    width: 100%;
+    height: 100%;
+    filter: blur(20px);
+  }
+}
+.play-box{
+  position: absolute;
+  background: rgba(0, 0, 0, .5);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.play-head{
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #fff;
+  width: 100%;
+  height: 50px;
+  i,div{
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .iconfont{
+    line-height: 50px;
+    text-align: center;
+    font-size: 20px;
+    width: 15%;
+    &:last-child{
+      margin-left: -5px;
+      font-size: 24px;
+    }
+  }
+  .musicInfo{
+    margin-left: -5px;
+    text-align: center;
+    width: 70%;
+  }
+  .music-name{
+    overflow: hidden;    
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .music-singer{
+    font-size: 12px;
+  }
+}
+.play-body{
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 100%;
+  height: 70%;
+  .musicImg-box{
+    position: absolute;
+    background-image: url('../assets/img/hj.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 50%;
+    border: 15px solid rgba(204, 204, 204, .2);
+    left: calc(50% - 165px);
+    top: calc(50% - 165px);
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+  }
+  .musicImg{
+    position: absolute;
+    border-radius: 50%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 65%;
+  }
+}
+.play-foot{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: calc(30% - 50px);
+  .myAudio{
+    display: none;
+  }
+  .controls{
+    position: absolute;
+    overflow: hidden;
+    padding: 0 50px;
+    color: #fff;
+    text-align: center;
+    line-height: 60px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 60px;
+  }
+  .ctrl-center,
+  .ctrl-gd,
+  .ctrl-xd,
+  .ctrl-prev,
+  .ctrl-play,
+  .ctrl-next{
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .ctrl-xd{
+    float: left;
+    font-size: 20px;
+  }
+  .ctrl-gd{
+    float: right;
+    font-size: 32px;
+  }
+  .ctrl-center{
+    margin: 0 auto;
+    width: 170px;
+    height: 60px;
+  }
+  .ctrl-play,
+  .ctrl-pause{
+    font-size: 56px;
+  }
+  .ctrl-play{
+    margin-bottom: 3px;
+  }
+  .ctrl-prev{
+    float: left;
+    font-size: 30px;
+  }
+  .ctrl-next{
+    float: right;
+    font-size: 30px;
+  }
+}
+.rotateImg{
+  animation: rotateImg 20s linear infinite;
+  -webkit-animation: rotateImg 20s linear infinite;
+}
+@-webkit-keyframes rotateImg{
+  0%{-webkit-transform:rotate(0deg);}
+  25%{-webkit-transform:rotate(90deg);}
+  50%{-webkit-transform:rotate(180deg);}
+  75%{-webkit-transform:rotate(270deg);}
+  100%{-webkit-transform:rotate(360deg);}
+}
+// 当前播放歌单
+.popup-box{
+  position: absolute;
+  padding: 10px 10px 0;
+  border-radius: 20px;
+  bottom: 20px;
+  width: calc(100% - 50px);
+  height: 450px;
+  .playing-title{
+    margin: 0;
+    span{
+      margin-left: 5px;
+      font-size: 14px;
+      color: #999;
+      font-weight: normal;
+    }
+  }
+  .playing-status{
+    position: relative;
+    padding: 8px 0;
+    font-size: 14px;
+  }
+  .ctrl-status{
+    line-height: 20px;
+    width: 100px;
+    .iconfont{
+      margin-right: 5px;
+      font-size: 14px;
+      color: #666;
+    }
+  }
+  .icon-delAll{
+    position: absolute;
+    font-size: 18px;
+    color: #999;
+    right: 2px;
+    top: 8px;
+  }
+  .playing-list{
+    border-bottom: 1px solid #efefef;
+    overflow-y: scroll;
+    height: 343px;
+    i{
+      font-style: normal;
+    }
+    .playing-list-item{
+      position: relative;
+      border-top: 1px solid #efefef;
+      padding: 12px 20px 12px 0;
+      font-size: 14px;
+      line-height: 20px;
+      width: calc(100% - 20px);
+      height: 20px;
+      overflow: hidden;    
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .playing-list-item-ing{
+      color: #FF352C;
+    }
+    .playing-list-item-disable{
+      color: #ddd;
+    }
+    .icon-ing{
+      font-size: 16px;
+      color: #FF352C;
+      vertical-align: middle;
+    }
+    .icon-del{
+      position: absolute;
+      font-size: 18px;
+      color: #666;
+      right: 0;
+    }
+  }
+  .close-popup{
+    text-align: center;
+    line-height: 45px;
+    height: 45px;
+  }
+}

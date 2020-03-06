@@ -1,5 +1,5 @@
 const config = {
-  api_base: '//localhost:3000/'
+  api_base: '//193.112.74.176:3000/'
 }
 
 module.exports = config;
