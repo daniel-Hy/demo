@@ -2,25 +2,13 @@
   <div class="page-discover">
     <div class="banner-box">
       <mt-swipe :auto="5000">
-        <mt-swipe-item class="bannerInfo">
-          <img src="//p1.music.126.net/Z_721L_HWnP8pH0UuGyu7w==/109951164579701346.jpg"/>
-        </mt-swipe-item>
-        <mt-swipe-item class="bannerInfo">
-          <img src="//p1.music.126.net/TEMRISJerkEN7db0LM15Fg==/109951164579941097.jpg"/>
-        </mt-swipe-item>
-        <mt-swipe-item class="bannerInfo">
-          <img src="//p1.music.126.net/mtAnrcXJlxcOuUcapOTNRg==/109951164579623236.jpg"/>
-        </mt-swipe-item>
-        <mt-swipe-item class="bannerInfo">
-          <img src="//p1.music.126.net/bZSDSXd_kKhBhLJnH1Ql1Q==/109951164579793436.jpg"/>
-        </mt-swipe-item>
-        <mt-swipe-item class="bannerInfo">
-          <img src="//p1.music.126.net/8UB-7KuU0PywInKuzdpjzw==/109951164579786076.jpg"/>
+        <mt-swipe-item class="bannerInfo" v-for="(item, index) in bannerList" :key="index">
+          <img :src="item.pic"/>
         </mt-swipe-item>
       </mt-swipe>
     </div>
     <ul class="gn-list">
-      <li class="gn-list-info">
+      <li class="gn-list-info" @click="toRecommend">
         <span class="list-info-span"><i class="iconfont" style="font-size: 20px;">&#xe645;</i></span>每日推荐
       </li>
       <li class="gn-list-info">
@@ -56,51 +44,13 @@
         </swiper>
       </div>
     </div>
-    <div class="part-box">
-      <div class="partHead">
-        <p class="partHead-title">推荐歌单</p>
-        <p class="partHead-subTitle">为你精挑细选</p>
-        <div class="pratHead-btn">查看更多</div>
-      </div>
-      <div style="padding: 0 20px;">
-        <swiper class="swiper-box" :options="swiperOption">
-          <swiper-slide class="swiper-slide" v-for="(item, index) in recommendList" :key="index">
-            <div class="recommendCover">
-              <img :src="item.picUrl" width="100%"/>
-              <div class="recommendCount">
-                <i class="iconfont">&#xe611;</i>{{item.count}}
-              </div>
-            </div>
-            <p class="recommendName">{{item.name}}</p>
-          </swiper-slide>
-        </swiper>
-      </div>
-    </div>
-    <div class="part-box">
-      <div class="partHead">
-        <p class="partHead-title">推荐歌单</p>
-        <p class="partHead-subTitle">为你精挑细选</p>
-        <div class="pratHead-btn">查看更多</div>
-      </div>
-      <div style="padding: 0 20px;">
-        <swiper class="swiper-box" :options="swiperOption">
-          <swiper-slide class="swiper-slide" v-for="(item, index) in recommendList" :key="index">
-            <div class="recommendCover">
-              <img :src="item.picUrl" width="100%"/>
-              <div class="recommendCount">
-                <i class="iconfont">&#xe611;</i>{{item.count}}
-              </div>
-            </div>
-            <p class="recommendName">{{item.name}}</p>
-          </swiper-slide>
-        </swiper>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
   import $ from 'jquery'
+  import { getBannerList } from '@/api/userInfo'
+  import { Toast } from 'mint-ui'
 
   export default {
     name: 'Discover',
@@ -118,11 +68,13 @@
           slidesPerView: 3.5,
           spaceBetween: 10,
           freeMode: true,
-        }
+        },
+        bannerList: [], // banner
       }
     },
     mounted() {
       const self = this
+      self.fetchBannerList()
       $(function() {
         const itemWidth = $('.songsList').find('.songsList-item').width()
         $('.songsList').find('.songsImg-box').height(itemWidth)
@@ -148,6 +100,22 @@
             { picUrl: '//p1.music.126.net/KTo5oSxH3CPA5PBTeFKDyA==/109951164581432409.jpg', name: '摩天动物园', singer: 'G.E.M.邓紫棋' }
           ]
         }
+      },
+      // 获取banner
+      fetchBannerList() {
+        const self = this
+        getBannerList({
+          type: 2 // 0: pc(默认) 1:android 2:iphone 3:ipad
+        }).then(res => {
+          self.bannerList = res.banners
+        }).catch(err => {
+          Toast('获取banner错误!')
+        })
+      },
+      // 跳转每日推荐
+      toRecommend() {
+        const self = this
+        self.$router.push({name: 'recommend'})
       }
     }
   }
