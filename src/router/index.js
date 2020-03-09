@@ -6,6 +6,8 @@ import Mine from '@/pages/mine'
 import Interflow from '@/pages/interflow'
 import Account from '@/pages/account'
 import Detail from '@/pages/detail'
+import Recommend from '@/pages/recommend'
+import Login from '@/pages/login'
 
 Vue.use(Router)
 
@@ -18,7 +20,7 @@ Router.prototype.push = function push(location) {
 }
 
 export default new Router({
-  mode: 'history',
+  //mode: 'history',
   routes: [
     {
       path: '/',
@@ -48,6 +50,14 @@ export default new Router({
       path: '/detail',
       name: 'detail',
       component: Detail
+    },{
+      path: '/recommend',
+      name: 'recommend',
+      component: Recommend
+    },{
+      path: '/login',
+      name: 'login',
+      component: Login
     }
   ]
 })
